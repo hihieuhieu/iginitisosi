@@ -78,6 +78,14 @@ target/
 # Jupyter Notebook
 .ipynb_checkpoints
 
+# Node / frontend
+node_modules/
+dist/
+.vite/
+
+# OS crap
+.DS_store
+
 # IPython
 profile_default/
 ipython_config.py
