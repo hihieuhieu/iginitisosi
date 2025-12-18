@@ -1,12 +1,13 @@
 # backend/main.py
-from fastapi import FastAPI, UploadFile, File, Form
-from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import StreamingResponse
-import io
-import soundfile as sf
+
+from fastapi import FastAPI, UploadFile, File, Form # kinda webbrain
+from fastapi.middleware.cors import CORSMiddleware #required for communication between browser and server
+from fastapi.responses import StreamingResponse # raw audios
+import io # in-memory fake file
+import soundfile as sf # read and write audio
 import numpy as np
 
-app = FastAPI()
+app = FastAPI() # creates server
 
 # CORS so frontend can talk to backend in dev
 app.add_middleware(
@@ -17,10 +18,12 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
+# health check, i.e. browser checks if backend (server) is alive
 @app.get("/health")
 def health():
     return {"status": "ok"}
 
+# core:
 @app.post("/process")
 async def process_audio(
     file: UploadFile = File(...),
@@ -28,6 +31,8 @@ async def process_audio(
 ):
     # 1. Read audio file
     data, samplerate = sf.read(file.file)
+
+    print(samplerate)
     # Ensure float
     data = data.astype(np.float32)
 
