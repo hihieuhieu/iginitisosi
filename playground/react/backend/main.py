@@ -23,6 +23,8 @@ app.add_middleware(
 def health():
     return {"status": "ok"}
 
+# ------------------------ CORE FUNCTIONS ------------------------ #
+
 # core:
 @app.post("/process")
 async def process_audio(
@@ -32,7 +34,7 @@ async def process_audio(
     # 1. Read audio file
     data, samplerate = sf.read(file.file)
 
-    print(samplerate)
+    # print('Sample rate: ',samplerate)
     # Ensure float
     data = data.astype(np.float32)
 
